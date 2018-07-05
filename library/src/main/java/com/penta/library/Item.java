@@ -1,4 +1,4 @@
-package com.penta.unifieduiframwork.framwork;
+package com.penta.library;
 
 import android.content.Context;
 import android.view.View;
@@ -7,7 +7,7 @@ import android.view.View;
  * Created by linyueyang on 2018/6/28.
  */
 
-public interface ItemView<T> {
+public interface Item<T> {
 
     String getItemType();
 

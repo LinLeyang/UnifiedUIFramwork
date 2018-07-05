@@ -1,4 +1,4 @@
-package com.penta.unifieduiframwork.framwork;
+package com.penta.library;
 
 import android.content.Context;
 import android.view.View;
@@ -20,31 +20,22 @@ public class ViewController {
 
     ViewAdapter adapter;
     ListView listView;
-    List<ItemView> itemViewList = new ArrayList<>();
+    List<Item> itemViewList = new ArrayList<>();
     Set<String> itemTypeSet = new HashSet<>();
     Context context;
 
     Listener listener;
 
     public ViewController init(Context context, ListView listView) {
+        return init(context, listView, 1);
+    }
+
+    public ViewController init(Context context, ListView listView, int viewTypeCount) {
         this.context = context;
         this.listView = listView;
-        return this;
-    }
-
-    public ViewController addItem(ItemView itemView) {
-        itemViewList.add(itemView);
-        itemTypeSet.add(itemView.getItemType());
-        if (null != listener) {
-            itemView.setListener(listener);
-        }
-        return this;
-    }
-
-    public void execute() {
         adapter = new ViewAdapter(context);
-        adapter.setItemTypeSet(itemTypeSet);
         adapter.setItemViewList(itemViewList);
+        adapter.setViewTypeCount(viewTypeCount);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -62,6 +53,26 @@ public class ViewController {
                 listener.onEvent(event);
             }
         });
+        return this;
+    }
+
+    public ViewController addItem(Item itemView) {
+        itemViewList.add(itemView);
+        itemTypeSet.add(itemView.getItemType());
+        if (null != listener) {
+            itemView.setListener(listener);
+        }
+        return this;
+    }
+
+    public void refresh() {
+        adapter.setItemTypeSet(itemTypeSet);
+        adapter.notifyDataSetChanged();
+    }
+
+    public void clear() {
+        itemViewList.clear();
+        itemTypeSet.clear();
     }
 
     public void setListener(Listener listener) {

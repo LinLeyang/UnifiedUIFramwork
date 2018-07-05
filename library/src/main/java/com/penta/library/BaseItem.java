@@ -1,4 +1,4 @@
-package com.penta.unifieduiframwork.framwork;
+package com.penta.library;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,10 +8,9 @@ import android.view.View;
  * Created by linyueyang on 2018/7/3.
  */
 
-public abstract class BaseItemView<T, VH extends BaseItemView.BaseViewHolder> implements ItemView<T> {
+public abstract class BaseItem<T, VH extends BaseItem.BaseViewHolder> implements Item<T> {
 
     T t;
-
     @Override
     public T getData() {
         return t;

@@ -9,11 +9,14 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.penta.unifieduiframwork.framwork.Event;
-import com.penta.unifieduiframwork.framwork.Listener;
-import com.penta.unifieduiframwork.framwork.ViewController;
-import com.penta.unifieduiframwork.itemview.BoyItemView;
-import com.penta.unifieduiframwork.itemview.GirlItemView;
+import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
+import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
+import com.lcodecore.tkrefreshlayout.header.bezierlayout.BezierLayout;
+import com.penta.library.Event;
+import com.penta.library.Listener;
+import com.penta.library.ViewController;
+import com.penta.unifieduiframwork.itemview.BoyItem;
+import com.penta.unifieduiframwork.itemview.GirlItem;
 import com.penta.unifieduiframwork.model.Boy;
 import com.penta.unifieduiframwork.model.Girl;
 
@@ -27,8 +30,9 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements Listener {
 
-
     ViewController viewController;
+    int pageNum = 0;
+    TwinklingRefreshLayout refreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,17 +41,45 @@ public class MainActivity extends AppCompatActivity implements Listener {
         Fresco.initialize(this);
         ListView listView = findViewById(R.id.lv);
 
+
+        refreshLayout = findViewById(R.id.refreshLayout);
+
         viewController = new ViewController();
-        viewController.init(this, listView);
+        viewController.init(this, listView, 2);
         viewController.setListener(this);
-        getData();
+
+        BezierLayout headerView = new BezierLayout(this);
+        refreshLayout.setHeaderView(headerView);
+        refreshLayout.setOverScrollRefreshShow(false);
+        refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
+            @Override
+            public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
+
+                getData(true);
+
+
+            }
+
+            @Override
+            public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
+
+                getData(false);
+
+            }
+        });
+        getData(false);
     }
 
-    public void getData() {
+    public void getData(final boolean isRefresh) {
+        if (isRefresh) {
+            pageNum = 0;
+            viewController.clear();
+        }
+        pageNum += 1;
 
         OkHttpClient mOkHttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
-                .url("http://gank.io/api/data/%E7%A6%8F%E5%88%A9/10/2")
+                .url("http://gank.io/api/data/%E7%A6%8F%E5%88%A9/10/" + pageNum)
                 .build();
         Call call = mOkHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -68,16 +100,28 @@ public class MainActivity extends AppCompatActivity implements Listener {
 
                 if (null != jsonList) {
                     for (int i = 0; i < jsonList.size(); i++) {
-                        JSONObject jsonObject1 = jsonList.getJSONObject(i);
-                        if (jsonObject1.getString("desc").equals("2018-06-13")) {
-                            Boy boy = JSON.parseObject(jsonObject1.toJSONString(), Boy.class);
-                            BoyItemView boyItemView = new BoyItemView();
+                        JSONObject jsonObjectItem = jsonList.getJSONObject(i);
+
+                        String desc = jsonObjectItem.getString("desc");
+                        int date = 0;
+                        try {
+                            if (null != desc) {
+                                String[] descList = desc.split("-");
+                                date = Integer.parseInt(descList[descList.length - 1]);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        if (date % 2 == 1) {
+                            Boy boy = JSON.parseObject(jsonObjectItem.toJSONString(), Boy.class);
+                            BoyItem boyItemView = new BoyItem();
                             boyItemView.setData(boy);
                             viewController.addItem(boyItemView);
 
                         } else {
-                            Girl girl = JSON.parseObject(jsonObject1.toJSONString(), Girl.class);
-                            GirlItemView girlItemView = new GirlItemView();
+                            Girl girl = JSON.parseObject(jsonObjectItem.toJSONString(), Girl.class);
+                            GirlItem girlItemView = new GirlItem();
                             girlItemView.setData(girl);
                             viewController.addItem(girlItemView);
                         }
@@ -87,7 +131,13 @@ public class MainActivity extends AppCompatActivity implements Listener {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        viewController.execute();
+                        viewController.refresh();
+                        if (isRefresh) {
+                            refreshLayout.finishRefreshing();
+                        } else {
+                            refreshLayout.finishLoadmore();
+                        }
+
                     }
                 });
             }

@@ -1,11 +1,10 @@
-package com.penta.unifieduiframwork.framwork;
+package com.penta.library;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,30 +16,28 @@ import java.util.Set;
 
 public class ViewAdapter extends BaseAdapter {
 
-    List<ItemView> itemViewList = new ArrayList<>();
+    List<Item> itemViewList;
     Context context;
-    int viewTypeCount;
+    int viewTypeCount = 1;
     Map<String, Integer> itemTypeMap = new HashMap<>();
 
     ViewAdapter(Context context) {
         this.context = context;
     }
 
-    public void setItemViewList(List<ItemView> itemViewList) {
-        if (null != itemViewList) {
-            this.itemViewList.addAll(itemViewList);
-        } else {
-            this.itemViewList.clear();
-        }
+    public void setItemViewList(List<Item> itemViewList) {
+        this.itemViewList = itemViewList;
     }
 
     @Override
     public int getCount() {
-        return itemViewList.size();
+        if (null != itemViewList)
+            return itemViewList.size();
+        return 0;
     }
 
     @Override
-    public ItemView getItem(int position) {
+    public Item getItem(int position) {
         return itemViewList.get(position);
     }
 
@@ -51,25 +48,29 @@ public class ViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ItemView itemView = getItem(position);
+        Item itemView = getItem(position);
 
         if (null == convertView) {
             convertView = itemView.initView(context);
         }
 
-        itemView.bindDataToView(convertView,position);
+        itemView.bindDataToView(convertView, position);
 
         return convertView;
     }
 
     public void setItemTypeSet(Set<String> itemTypeSet) {
-        this.viewTypeCount = itemTypeSet.size();
+//        this.viewTypeCount = itemTypeSet.size();
         int i = 0;
         for (String str : itemTypeSet) {
             itemTypeMap.put(str, i);
             i++;
         }
 
+    }
+
+    public void setViewTypeCount(int viewTypeCount) {
+        this.viewTypeCount = viewTypeCount;
     }
 
     @Override
@@ -79,7 +80,12 @@ public class ViewAdapter extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        return itemTypeMap.get(getItem(position).getItemType());
+        int re = 0;
+
+        if (null != itemTypeMap)
+            re = itemTypeMap.get(getItem(position).getItemType());
+        return re;
+
     }
 
 }

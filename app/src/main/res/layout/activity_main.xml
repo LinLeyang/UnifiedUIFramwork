@@ -5,10 +5,17 @@
     android:layout_height="match_parent"
     tools:context="com.penta.unifieduiframwork.MainActivity">
 
-    <ListView
-        android:id="@+id/lv"
+    <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
+        <ListView
+            android:id="@+id/lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#213558"
+            android:dividerHeight="4dp" />
+    </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
 
 </android.support.constraint.ConstraintLayout>
