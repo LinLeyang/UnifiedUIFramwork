@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements Listener {
         Fresco.initialize(this);
         ListView listView = findViewById(R.id.lv);
 
-
         refreshLayout = findViewById(R.id.refreshLayout);
 
         viewController = new ViewController();
