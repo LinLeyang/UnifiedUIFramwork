@@ -12,6 +12,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.lcodecore.tkrefreshlayout.header.bezierlayout.BezierLayout;
+import com.lcodecore.tkrefreshlayout.header.progresslayout.ProgressLayout;
 import com.penta.library.Event;
 import com.penta.library.Listener;
 import com.penta.library.ViewController;
@@ -47,23 +48,19 @@ public class MainActivity extends AppCompatActivity implements Listener {
         viewController.init(this, listView, 2);
         viewController.setListener(this);
 
-        BezierLayout headerView = new BezierLayout(this);
+        ProgressLayout headerView = new ProgressLayout(this);
+        headerView.setColorSchemeResources(R.color.girl_bg);
         refreshLayout.setHeaderView(headerView);
         refreshLayout.setOverScrollRefreshShow(false);
         refreshLayout.setOnRefreshListener(new RefreshListenerAdapter() {
             @Override
             public void onRefresh(final TwinklingRefreshLayout refreshLayout) {
-
                 getData(true);
-
-
             }
 
             @Override
             public void onLoadMore(final TwinklingRefreshLayout refreshLayout) {
-
                 getData(false);
-
             }
         });
         getData(false);

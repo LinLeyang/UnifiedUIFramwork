@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="girl_bg">#FF4040</color>
+    <color name="boy_bg">#FFFFFF</color>
+    <color name="line">#FFCCCC</color>
 </resources>

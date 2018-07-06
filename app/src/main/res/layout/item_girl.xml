@@ -5,7 +5,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ddc7a0"
+    android:background="@color/girl_bg"
     android:padding="10dp">
 
 
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         fresco:roundAsCircle="true"
         fresco:roundingBorderWidth="1dp"
-        fresco:roundingBorderColor="#213558"/>
+        fresco:roundingBorderColor="@color/boy_bg"/>
 
 
     <TextView
@@ -27,7 +27,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="12dp"
         android:text="马云:一年交税170多亿马云"
-        android:textColor="#213558"
+        android:textColor="@color/boy_bg"
         android:textSize="16dp"
         app:layout_constraintLeft_toRightOf="@id/iv1"
         app:layout_constraintRight_toRightOf="parent"
@@ -40,7 +40,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="12dp"
         android:text="8分钟前"
-        android:textColor="#213558"
+        android:textColor="@color/boy_bg"
         android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="@id/iv1"
         app:layout_constraintLeft_toRightOf="@id/iv1" />
