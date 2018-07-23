@@ -16,24 +16,24 @@ import java.util.Set;
  * 所有View控制类
  */
 
-public class ViewController {
+public class UUViewController {
 
-    ViewAdapter adapter;
+    UUViewAdapter adapter;
     ListView listView;
-    List<Item> itemViewList = new ArrayList<>();
+    List<UUItem> itemViewList = new ArrayList<>();
     Set<String> itemTypeSet = new HashSet<>();
     Context context;
 
-    Listener listener;
+    UUListener listener;
 
-    public ViewController init(Context context, ListView listView) {
+    public UUViewController init(Context context, ListView listView) {
         return init(context, listView, 1);
     }
 
-    public ViewController init(Context context, ListView listView, int viewTypeCount) {
+    public UUViewController init(Context context, ListView listView, int viewTypeCount) {
         this.context = context;
         this.listView = listView;
-        adapter = new ViewAdapter(context);
+        adapter = new UUViewAdapter(context);
         adapter.setItemViewList(itemViewList);
         adapter.setViewTypeCount(viewTypeCount);
         listView.setAdapter(adapter);
@@ -41,7 +41,7 @@ public class ViewController {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Event event = new Event() {
+                UUEvent event = new UUEvent() {
                     @Override
                     public String getEventId() {
                         return "click";
@@ -56,7 +56,7 @@ public class ViewController {
         return this;
     }
 
-    public ViewController addItem(Item itemView) {
+    public UUViewController addItem(UUItem itemView) {
         itemViewList.add(itemView);
         itemTypeSet.add(itemView.getItemType());
         if (null != listener) {
@@ -75,7 +75,7 @@ public class ViewController {
         itemTypeSet.clear();
     }
 
-    public void setListener(Listener listener) {
+    public void setListener(UUListener listener) {
         this.listener = listener;
     }
 }

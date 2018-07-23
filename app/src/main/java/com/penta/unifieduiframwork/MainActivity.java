@@ -12,9 +12,9 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.lcodecore.tkrefreshlayout.header.progresslayout.ProgressLayout;
-import com.penta.library.Event;
-import com.penta.library.Listener;
-import com.penta.library.ViewController;
+import com.penta.library.UUEvent;
+import com.penta.library.UUListener;
+import com.penta.library.UUViewController;
 import com.penta.unifieduiframwork.itemview.BoyItem;
 import com.penta.unifieduiframwork.itemview.GirlItem;
 import com.penta.unifieduiframwork.model.Boy;
@@ -28,9 +28,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity implements Listener {
+public class MainActivity extends AppCompatActivity implements UUListener {
 
-    ViewController viewController;
+    UUViewController viewController;
     int pageNum = 0;
     TwinklingRefreshLayout refreshLayout;
 
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
 
         refreshLayout = findViewById(R.id.refreshLayout);
 
-        viewController = new ViewController();
+        viewController = new UUViewController();
         viewController.init(this, listView, 2);
         viewController.setListener(this);
 
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements Listener {
     }
 
     @Override
-    public void onEvent(Event event) {
+    public void onEvent(UUEvent event) {
         switch (event.getEventId()) {
             case "click":
                 Toast.makeText(this, "EventId:" + event.getEventId() + "\nPosition:" + event.getPosition(), Toast.LENGTH_LONG).show();

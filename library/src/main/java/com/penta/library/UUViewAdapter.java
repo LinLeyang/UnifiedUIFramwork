@@ -14,18 +14,18 @@ import java.util.Set;
  * Created by linyueyang on 2018/6/28.
  */
 
-public class ViewAdapter extends BaseAdapter {
+public class UUViewAdapter extends BaseAdapter {
 
-    List<Item> itemViewList;
+    List<UUItem> itemViewList;
     Context context;
     int viewTypeCount = 1;
     Map<String, Integer> itemTypeMap = new HashMap<>();
 
-    ViewAdapter(Context context) {
+    UUViewAdapter(Context context) {
         this.context = context;
     }
 
-    public void setItemViewList(List<Item> itemViewList) {
+    public void setItemViewList(List<UUItem> itemViewList) {
         this.itemViewList = itemViewList;
     }
 
@@ -37,7 +37,7 @@ public class ViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public Item getItem(int position) {
+    public UUItem getItem(int position) {
         return itemViewList.get(position);
     }
 
@@ -48,7 +48,7 @@ public class ViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Item itemView = getItem(position);
+        UUItem itemView = getItem(position);
 
         if (null == convertView) {
             convertView = itemView.initView(context);

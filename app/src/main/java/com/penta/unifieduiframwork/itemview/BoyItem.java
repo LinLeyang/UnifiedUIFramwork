@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.penta.library.BaseItem;
-import com.penta.library.Event;
+import com.penta.library.UUBaseItem;
+import com.penta.library.UUEvent;
 import com.penta.unifieduiframwork.model.Boy;
 import com.penta.unifieduiframwork.R;
 
@@ -14,7 +14,7 @@ import com.penta.unifieduiframwork.R;
  * Created by linyueyang on 2018/7/4.
  */
 
-public class BoyItem extends BaseItem<Boy, BoyItem.BoyViewHolder> {
+public class BoyItem extends UUBaseItem<Boy, BoyItem.BoyViewHolder> {
 
     @Override
     public String getItemType() {
@@ -40,7 +40,7 @@ public class BoyItem extends BaseItem<Boy, BoyItem.BoyViewHolder> {
         viewHolder.iv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Event event = new Event() {
+                UUEvent event = new UUEvent() {
                     @Override
                     public String getEventId() {
                         return "boyPic";
@@ -53,7 +53,7 @@ public class BoyItem extends BaseItem<Boy, BoyItem.BoyViewHolder> {
         });
     }
 
-    public class BoyViewHolder extends BaseItem.BaseViewHolder {
+    public class BoyViewHolder extends UUBaseItem.UUBaseViewHolder {
 
         SimpleDraweeView iv1;
         TextView tv1;

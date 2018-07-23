@@ -7,7 +7,7 @@ import android.view.View;
  * Created by linyueyang on 2018/6/28.
  */
 
-public interface Item<T> {
+public interface UUItem<T> {
 
     String getItemType();
 
@@ -21,5 +21,5 @@ public interface Item<T> {
 
     void bindDataToView(View convertView, int position);
 
-    void setListener(Listener listener);
+    void setListener(UUListener listener);
 }

@@ -4,7 +4,7 @@ package com.penta.library;
  * Created by linyueyang on 2018/7/4.
  */
 
-public abstract class Event {
+public abstract class UUEvent {
 
     public abstract String getEventId();
 

@@ -4,8 +4,8 @@ package com.penta.library;
  * Created by linyueyang on 2018/7/4.
  */
 
-public interface Listener {
+public interface UUListener {
 
-    void onEvent(Event event);
+    void onEvent(UUEvent event);
 
 }

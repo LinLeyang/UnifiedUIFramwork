@@ -8,7 +8,7 @@ import android.view.View;
  * Created by linyueyang on 2018/7/3.
  */
 
-public abstract class BaseItem<T, VH extends BaseItem.BaseViewHolder> implements Item<T> {
+public abstract class UUBaseItem<T, VH extends UUBaseItem.UUBaseViewHolder> implements UUItem<T> {
 
     T t;
     @Override
@@ -21,7 +21,7 @@ public abstract class BaseItem<T, VH extends BaseItem.BaseViewHolder> implements
         this.t = t;
     }
 
-    Listener listener;
+    UUListener listener;
 
     @Override
     public View initView(Context context) {
@@ -30,11 +30,11 @@ public abstract class BaseItem<T, VH extends BaseItem.BaseViewHolder> implements
     }
 
     @Override
-    public void setListener(Listener listener) {
+    public void setListener(UUListener listener) {
         this.listener = listener;
     }
 
-    public Listener getListener() {
+    public UUListener getListener() {
         return listener;
     }
 
@@ -45,7 +45,7 @@ public abstract class BaseItem<T, VH extends BaseItem.BaseViewHolder> implements
     @Override
     public void bindDataToView(View convertView, int position) {
         VH viewHolder;
-        if (null != convertView.getTag() && convertView.getTag() instanceof BaseViewHolder) {
+        if (null != convertView.getTag() && convertView.getTag() instanceof UUBaseItem.UUBaseViewHolder) {
             viewHolder = (VH) convertView.getTag();
         } else {
             viewHolder = onCreateViewHolder(convertView);
@@ -56,8 +56,8 @@ public abstract class BaseItem<T, VH extends BaseItem.BaseViewHolder> implements
 
     }
 
-    public static abstract class BaseViewHolder {
-        public BaseViewHolder(View itemView) {
+    public static abstract class UUBaseViewHolder {
+        public UUBaseViewHolder(View itemView) {
             if (itemView == null) {
                 throw new IllegalArgumentException("itemView may not be null");
             }
