@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 public abstract class UUBaseItem<T, VH extends UUBaseViewHolder> implements UUItem<T, VH> {
 
     T t;
+    protected Context context;
 
     @Override
     public T getData() {
@@ -28,6 +29,7 @@ public abstract class UUBaseItem<T, VH extends UUBaseViewHolder> implements UUIt
     @Override
     public View initView(Context context, ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(getLayoutId(), parent, false);
+        this.context = context;
         return view;
     }
 
