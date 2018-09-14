@@ -3,14 +3,16 @@ package com.penta.library;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Created by linyueyang on 2018/7/3.
  */
 
-public abstract class UUBaseItem<T, VH extends UUBaseItem.UUBaseViewHolder> implements UUItem<T> {
+public abstract class UUBaseItem<T, VH extends UUBaseViewHolder> implements UUItem<T, VH> {
 
     T t;
+
     @Override
     public T getData() {
         return t;
@@ -24,8 +26,8 @@ public abstract class UUBaseItem<T, VH extends UUBaseItem.UUBaseViewHolder> impl
     UUListener listener;
 
     @Override
-    public View initView(Context context) {
-        View view = LayoutInflater.from(context).inflate(getLayoutId(), null);
+    public View initView(Context context, ViewGroup parent) {
+        View view = LayoutInflater.from(context).inflate(getLayoutId(), parent, false);
         return view;
     }
 
@@ -45,7 +47,7 @@ public abstract class UUBaseItem<T, VH extends UUBaseItem.UUBaseViewHolder> impl
     @Override
     public void bindDataToView(View convertView, int position) {
         VH viewHolder;
-        if (null != convertView.getTag() && convertView.getTag() instanceof UUBaseItem.UUBaseViewHolder) {
+        if (null != convertView.getTag() && convertView.getTag() instanceof UUBaseViewHolder) {
             viewHolder = (VH) convertView.getTag();
         } else {
             viewHolder = onCreateViewHolder(convertView);
@@ -56,12 +58,5 @@ public abstract class UUBaseItem<T, VH extends UUBaseItem.UUBaseViewHolder> impl
 
     }
 
-    public static abstract class UUBaseViewHolder {
-        public UUBaseViewHolder(View itemView) {
-            if (itemView == null) {
-                throw new IllegalArgumentException("itemView may not be null");
-            }
-        }
-    }
 
 }

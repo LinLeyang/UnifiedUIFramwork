@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.penta.library.UUBaseItem;
+import com.penta.library.UUBaseViewHolder;
 import com.penta.library.UUEvent;
 import com.penta.unifieduiframwork.model.Boy;
 import com.penta.unifieduiframwork.R;
@@ -53,7 +54,7 @@ public class BoyItem extends UUBaseItem<Boy, BoyItem.BoyViewHolder> {
         });
     }
 
-    public class BoyViewHolder extends UUBaseItem.UUBaseViewHolder {
+    public class BoyViewHolder extends UUBaseViewHolder {
 
         SimpleDraweeView iv1;
         TextView tv1;

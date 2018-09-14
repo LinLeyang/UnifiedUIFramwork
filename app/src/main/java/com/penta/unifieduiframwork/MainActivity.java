@@ -2,6 +2,10 @@ package com.penta.unifieduiframwork;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -39,13 +43,31 @@ public class MainActivity extends AppCompatActivity implements UUListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Fresco.initialize(this);
-        ListView listView = findViewById(R.id.lv);
-
+        //ListView listView = findViewById(R.id.lv);
+        RecyclerView recyclerView = findViewById(R.id.rv);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         refreshLayout = findViewById(R.id.refreshLayout);
 
         viewController = new UUViewController();
-        viewController.init(this, listView, 2);
+        viewController.init(this, recyclerView);
         viewController.setListener(this);
+
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                UUEvent event = new UUEvent() {
+//                    @Override
+//                    public String getEventId() {
+//                        return "click";
+//                    }
+//                };
+//                event.setPosition(position);
+//                event.setData(parent.getAdapter().getItem(position));
+//
+//                viewController.getListener().onEvent(event);
+//            }
+//        });
 
         ProgressLayout headerView = new ProgressLayout(this);
         headerView.setColorSchemeResources(R.color.girl_bg);
@@ -63,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements UUListener {
             }
         });
         getData(false);
+
     }
 
     public void getData(final boolean isRefresh) {
@@ -74,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements UUListener {
 
         OkHttpClient mOkHttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
-                .url("http://gank.io/api/data/%E7%A6%8F%E5%88%A9/10/" + pageNum)
+                .url("https://gank.io/api/data/福利/10/" + pageNum)
                 .build();
         Call call = mOkHttpClient.newCall(request);
         call.enqueue(new Callback() {

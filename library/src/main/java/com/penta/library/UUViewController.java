@@ -1,13 +1,16 @@
 package com.penta.library;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -18,10 +21,10 @@ import java.util.Set;
 
 public class UUViewController {
 
-    UUViewAdapter adapter;
-    ListView listView;
+    UUAdapterInterface adapter;
     List<UUItem> itemViewList = new ArrayList<>();
     Set<String> itemTypeSet = new HashSet<>();
+    Map<String, UUItem> itemMap = new HashMap();
     Context context;
 
     UUListener listener;
@@ -30,35 +33,30 @@ public class UUViewController {
         return init(context, listView, 1);
     }
 
+    public UUViewController init(Context context, RecyclerView recyclerView) {
+        this.context = context;
+        UURvAdapter uuRvAdapter = new UURvAdapter(context);
+        adapter = uuRvAdapter;
+        uuRvAdapter.setItemViewList(itemViewList);
+        recyclerView.setAdapter(uuRvAdapter);
+        return this;
+    }
+
     public UUViewController init(Context context, ListView listView, int viewTypeCount) {
         this.context = context;
-        this.listView = listView;
-        adapter = new UUViewAdapter(context);
-        adapter.setItemViewList(itemViewList);
-        adapter.setViewTypeCount(viewTypeCount);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        UUViewAdapter uuViewAdapter = new UUViewAdapter(context);
+        adapter = uuViewAdapter;
+        uuViewAdapter.setItemViewList(itemViewList);
+        uuViewAdapter.setViewTypeCount(viewTypeCount);
+        listView.setAdapter(uuViewAdapter);
 
-                UUEvent event = new UUEvent() {
-                    @Override
-                    public String getEventId() {
-                        return "click";
-                    }
-                };
-                event.setPosition(position);
-                event.setData(parent.getAdapter().getItem(position));
-
-                listener.onEvent(event);
-            }
-        });
         return this;
     }
 
     public UUViewController addItem(UUItem itemView) {
         itemViewList.add(itemView);
         itemTypeSet.add(itemView.getItemType());
+        itemMap.put(itemView.getItemType(), itemView);
         if (null != listener) {
             itemView.setListener(listener);
         }
@@ -66,7 +64,7 @@ public class UUViewController {
     }
 
     public void refresh() {
-        adapter.setItemTypeSet(itemTypeSet);
+        adapter.setItemViewMap(itemMap);
         adapter.notifyDataSetChanged();
     }
 
@@ -77,5 +75,9 @@ public class UUViewController {
 
     public void setListener(UUListener listener) {
         this.listener = listener;
+    }
+
+    public UUListener getListener() {
+        return listener;
     }
 }

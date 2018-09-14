@@ -14,14 +14,14 @@ import java.util.Set;
  * Created by linyueyang on 2018/6/28.
  */
 
-public class UUViewAdapter extends BaseAdapter {
+public class UUViewAdapter extends BaseAdapter implements UUAdapterInterface {
 
     List<UUItem> itemViewList;
     Context context;
     int viewTypeCount = 1;
     Map<String, Integer> itemTypeMap = new HashMap<>();
 
-    UUViewAdapter(Context context) {
+    public UUViewAdapter(Context context) {
         this.context = context;
     }
 
@@ -51,7 +51,7 @@ public class UUViewAdapter extends BaseAdapter {
         UUItem itemView = getItem(position);
 
         if (null == convertView) {
-            convertView = itemView.initView(context);
+            convertView = itemView.initView(context, parent);
         }
 
         itemView.bindDataToView(convertView, position);
@@ -59,14 +59,13 @@ public class UUViewAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void setItemTypeSet(Set<String> itemTypeSet) {
-//        this.viewTypeCount = itemTypeSet.size();
+    @Override
+    public void setItemViewMap(Map<String, UUItem> map) {
         int i = 0;
-        for (String str : itemTypeSet) {
+        for (String str : map.keySet()) {
             itemTypeMap.put(str, i);
             i++;
         }
-
     }
 
     public void setViewTypeCount(int viewTypeCount) {

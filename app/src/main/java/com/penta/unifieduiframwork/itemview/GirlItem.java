@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.penta.library.UUBaseItem;
+import com.penta.library.UUBaseViewHolder;
 import com.penta.library.UUViewAdapter;
 import com.penta.unifieduiframwork.R;
 import com.penta.unifieduiframwork.model.Girl;
@@ -39,7 +40,7 @@ public class GirlItem extends UUBaseItem<Girl, GirlItem.GirlViewHolder> {
         viewHolder.tv2.setText(getData().getDesc());
     }
 
-    public class GirlViewHolder extends UUBaseItem.UUBaseViewHolder {
+    public class GirlViewHolder extends UUBaseViewHolder {
 
         SimpleDraweeView iv1;
         TextView tv1;
