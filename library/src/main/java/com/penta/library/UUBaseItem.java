@@ -5,6 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
+
 /**
  * Created by linyueyang on 2018/7/3.
  */
@@ -27,6 +31,26 @@ public abstract class UUBaseItem<T, VH extends UUBaseViewHolder> implements UUIt
     UUListener listener;
 
     @Override
+    public VH onCreateViewHolder(View convertView) {
+        VH vh = null;
+        Class<VH> entityClass = (Class<VH>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+        Class cls[] = new Class[] { View.class };
+        try {
+            Constructor<VH> con = entityClass.getConstructor(cls);
+            vh = con.newInstance(convertView);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return vh;
+    }
+
+    @Override
     public View initView(Context context, ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(getLayoutId(), parent, false);
         this.context = context;
@@ -42,7 +66,7 @@ public abstract class UUBaseItem<T, VH extends UUBaseViewHolder> implements UUIt
         return listener;
     }
 
-    public abstract VH onCreateViewHolder(View convertView);
+    //public abstract VH onCreateViewHolder(View convertView);
 
     public abstract void onBindDataToView(VH viewHolder, int position);
 

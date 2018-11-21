@@ -28,11 +28,6 @@ public class BoyItem extends UUBaseItem<Boy, BoyItem.BoyViewHolder> {
     }
 
     @Override
-    public BoyViewHolder onCreateViewHolder(View convertView) {
-        return new BoyViewHolder(convertView);
-    }
-
-    @Override
     public void onBindDataToView(BoyViewHolder viewHolder, final int position) {
         Uri uri = Uri.parse(getData().getUrl());
         viewHolder.iv1.setImageURI(uri);
@@ -54,13 +49,13 @@ public class BoyItem extends UUBaseItem<Boy, BoyItem.BoyViewHolder> {
         });
     }
 
-    public class BoyViewHolder extends UUBaseViewHolder {
+    public static class BoyViewHolder extends UUBaseViewHolder {
 
         SimpleDraweeView iv1;
         TextView tv1;
         TextView tv2;
 
-        BoyViewHolder(View view) {
+        public BoyViewHolder(View view) {
             super(view);
             iv1 = view.findViewById(R.id.iv1);
             tv1 = view.findViewById(R.id.tv1);
